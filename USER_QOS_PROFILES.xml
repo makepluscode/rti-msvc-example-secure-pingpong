@@ -37,7 +37,11 @@
         </qos_profile>
     </qos_library>
 
-    <!-- 보안(Security) 관련 설정 라이브러리 -->
+    <!-- 
+      보안(Security) 관련 설정 라이브러리 
+      참조: RTI Connext DDS 7.5.0 이상에서는 속성명이 간소화되었습니다.
+      실제 적용 시에는 RTI Security Plugins 라이선스가 필요합니다.
+    -->
     <qos_library name="Security_Library">
         <qos_profile name="Secure_PingPong_Profile" base_name="PingPong_Library::PingPong_Profile">
             <participant_qos>
@@ -46,52 +50,22 @@
                         <!-- 보안 플러그인 활성화 -->
                         <element>
                             <name>com.rti.serv.load_plugin</name>
-                            <value>com.rti.serv.secure.library</value>
+                            <value>com.rti.serv.secure</value>
                         </element>
 
-                        <!-- 인증(Authentication) 설정 -->
-                        <element>
-                            <name>dds.sec.auth.builtin.PKI-DH.identity_ca</name>
-                            <value>certs/identity_ca_cert.pem</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.auth.builtin.PKI-DH.identity_certificate</name>
-                            <value>certs/app1_cert.pem</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.auth.builtin.PKI-DH.private_key</name>
-                            <value>certs/app1_key.pem</value>
-                        </element>
+                        <!-- 인증(Authentication) 설정 (RTI 7.5.0 단축 속성명) -->
+                        <element><name>dds.sec.auth.identity_ca</name><value>certs/identity_ca_cert.pem</value></element>
+                        <element><name>dds.sec.auth.identity_certificate</name><value>certs/app1_cert.pem</value></element>
+                        <element><name>dds.sec.auth.private_key</name><value>certs/app1_key.pem</value></element>
 
                         <!-- 권한 제어(Access Control) 설정 -->
-                        <element>
-                            <name>dds.sec.access_control.builtin.PKI-DH.permissions_ca</name>
-                            <value>certs/permissions_ca_cert.pem</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.access_control.builtin.PKI-DH.governance</name>
-                            <value>certs/governance.p7s</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.access_control.builtin.PKI-DH.permissions</name>
-                            <value>certs/permissions.p7s</value>
-                        </element>
+                        <element><name>dds.sec.access.permissions_ca</name><value>certs/permissions_ca_cert.pem</value></element>
+                        <element><name>dds.sec.access.governance</name><value>certs/governance.p7s</value></element>
+                        <element><name>dds.sec.access.permissions</name><value>certs/permissions.p7s</value></element>
 
-                        <!-- 암호화(Cryptography) 설정 -->
-                        <element>
-                            <name>dds.sec.crypto.builtin.AES-GCM.library</name>
-                            <value>nddssecurity</value>
-                        </element>
-
-                        <!-- 보안 로깅(Logging) 설정 (인증 과정 확인용) -->
-                        <element>
-                            <name>dds.sec.log.builtin.logging_level</name>
-                            <value>4</value> <!-- 4: INFO, 5: DEBUG -->
-                        </element>
-                        <element>
-                            <name>dds.sec.log.builtin.standard_output</name>
-                            <value>true</value>
-                        </element>
+                        <!-- 보안 로깅 설정 (운영 환경에 따라 레벨 조정 가능) -->
+                        <element><name>dds.sec.log.builtin.logging_level</name><value>4</value></element>
+                        <element><name>dds.sec.log.builtin.distributor</name><value>stdout</value></element>
                     </value>
                 </property>
             </participant_qos>
@@ -102,14 +76,8 @@
             <participant_qos>
                 <property>
                     <value>
-                        <element>
-                            <name>dds.sec.auth.builtin.PKI-DH.identity_certificate</name>
-                            <value>certs/app2_cert.pem</value>
-                        </element>
-                        <element>
-                            <name>dds.sec.auth.builtin.PKI-DH.private_key</name>
-                            <value>certs/app2_key.pem</value>
-                        </element>
+                        <element><name>dds.sec.auth.identity_certificate</name><value>certs/app2_cert.pem</value></element>
+                        <element><name>dds.sec.auth.private_key</name><value>certs/app2_key.pem</value></element>
                     </value>
                 </property>
             </participant_qos>
