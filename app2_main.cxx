@@ -6,7 +6,6 @@
 
 #include "ping_pong.hpp"
 
-
 using namespace dds::domain;
 using namespace dds::topic;
 using namespace dds::pub;
@@ -37,6 +36,20 @@ class PongApp {
             }
         }
 
+        void on_subscription_matched(
+            DataReader<PingPongMessage>& reader,
+            const dds::core::status::SubscriptionMatchedStatus& status) override {
+            std::cout << "[app2] (Callback) Subscription matched: total_count="
+                      << status.total_count() << std::endl;
+        }
+
+        void on_liveliness_changed(
+            DataReader<PingPongMessage>& reader,
+            const dds::core::status::LivelinessChangedStatus& status) override {
+            std::cout << "[app2] (Callback) Liveliness changed: alive_count="
+                      << status.alive_count() << std::endl;
+        }
+
        private:
         DataWriter<PingPongMessage>& writer_;
     };
@@ -55,7 +68,10 @@ class PongApp {
 
         // Listener 설정
         listener_ = std::make_shared<PingListener>(writer_);
-        reader_.listener(listener_.get(), dds::core::status::StatusMask::data_available());
+        reader_.listener(listener_.get(),
+                         dds::core::status::StatusMask::data_available() |
+                             dds::core::status::StatusMask::subscription_matched() |
+                             dds::core::status::StatusMask::liveliness_changed());
     }
 
     void run() {
