@@ -82,6 +82,16 @@
                             <name>dds.sec.crypto.builtin.AES-GCM.library</name>
                             <value>nddssecurity</value>
                         </element>
+
+                        <!-- 보안 로깅(Logging) 설정 (인증 과정 확인용) -->
+                        <element>
+                            <name>dds.sec.log.builtin.logging_level</name>
+                            <value>4</value> <!-- 4: INFO, 5: DEBUG -->
+                        </element>
+                        <element>
+                            <name>dds.sec.log.builtin.standard_output</name>
+                            <value>true</value>
+                        </element>
                     </value>
                 </property>
             </participant_qos>

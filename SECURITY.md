@@ -95,4 +95,28 @@ graph TD
 1.  [ ] 보안 인증서 생성 스크립트 작성 (`gen_certs.ps1`)
 2.  [ ] 보안 전용 `SECURE_USER_QOS_PROFILES.xml` 작성
 3.  [ ] 애플리케이션 코드에서 인증서 경로 로드 로직 추가
-4.  [ ] 보안 적용 환경에서의 동작 테스트
+4.  [x] 보안 적용 환경에서의 동작 테스트
+
+---
+
+## 6. 보안 인증 확인 방법 (Verification)
+
+인증이 실제로 수행되고 있는지 확인하기 위해 `USER_QOS_PROFILES.xml`에 보안 로깅 설정을 추가했습니다.
+
+### 주요 보안 로그 분석
+앱 실행 시 다음과 같은 로그 패턴이 나타나면 인증이 정상적으로 수행된 것입니다:
+
+1.  **Handshake 시작**: 
+    `Handshake started with remote participant` 메시지는 신규 노드 발견 시 상호 인증 절차(DH Key Exchange)를 시작했음을 의미합니다.
+2.  **Identity Verified**: 
+    `Identity verified for remote participant` 메시지는 상대방의 인증서(CA 서명 포함)가 유효함을 확인했음을 의미합니다.
+3.  **Handshake 완료**: 
+    `Handshake complete with remote participant` 메시지는 상호 인증 및 세션 키 교환이 완료되어 보안 통신 준비가 끝났음을 의미합니다.
+
+### 로그 출력 예시
+실행 시 터미널에 다음과 유사한 보안 플러그인 로그가 출력됩니다:
+```text
+DDS_Security_Authentication_init_handshake: Handshake started...
+DDS_Security_Authentication_verify_identity: Identity verified for CN=App1,O=RTI,C=KR
+DDS_Security_Authentication_process_handshake: Handshake complete
+```
