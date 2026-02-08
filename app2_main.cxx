@@ -55,7 +55,10 @@ class PongApp {
 
         // Listener 설정
         listener_ = std::make_shared<PingListener>(writer_);
-        reader_.listener(listener_.get(), dds::core::status::StatusMask::data_available());
+        reader_.listener(listener_.get(),
+                         dds::core::status::StatusMask::data_available() |
+                             dds::core::status::StatusMask::subscription_matched() |
+                             dds::core::status::StatusMask::liveliness_changed());
     }
 
     void run() {

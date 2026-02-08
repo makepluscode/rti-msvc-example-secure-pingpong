@@ -32,6 +32,20 @@ class PingApp {
                 }
             }
         }
+
+        void on_subscription_matched(
+            DataReader<PingPongMessage>& reader,
+            const dds::core::status::SubscriptionMatchedStatus& status) override {
+            std::cout << "[app1] (Callback) Subscription matched: total_count="
+                      << status.total_count() << std::endl;
+        }
+
+        void on_liveliness_changed(
+            DataReader<PingPongMessage>& reader,
+            const dds::core::status::LivelinessChangedStatus& status) override {
+            std::cout << "[app1] (Callback) Liveliness changed: alive_count="
+                      << status.alive_count() << std::endl;
+        }
     };
 
     PingApp(int domain_id)
@@ -48,7 +62,10 @@ class PingApp {
 
         // Listener 설정
         listener_ = std::make_shared<PongListener>();
-        reader_.listener(listener_.get(), dds::core::status::StatusMask::data_available());
+        reader_.listener(listener_.get(),
+                         dds::core::status::StatusMask::data_available() |
+                             dds::core::status::StatusMask::subscription_matched() |
+                             dds::core::status::StatusMask::liveliness_changed());
     }
 
     void run() {
