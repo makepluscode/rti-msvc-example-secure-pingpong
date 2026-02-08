@@ -43,7 +43,8 @@ class PongApp {
     };
 
     PongApp(int domain_id)
-        : participant_(domain_id),
+        : participant_(domain_id, dds::core::QosProvider::Default().participant_qos(
+                                      "Security_Library::Secure_PingPong_Profile_App2")),
           publisher_(participant_),
           subscriber_(participant_),
           ping_topic_(participant_, "Ping"),
