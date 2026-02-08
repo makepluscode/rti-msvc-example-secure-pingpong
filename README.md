@@ -4,7 +4,7 @@
 
 ## 주요 특징
 - **Modern C++ API**: RTI Connext DDS의 최신 C++11/17 API 사용.
-- **Event-Driven**: `WaitSet` 및 `ReadCondition`을 활용한 효율적인 비동기 데이터 수신 처리.
+- **Async Callbacks**: `DataReaderListener`를 활용한 이벤트 기반 비동기 데이터 수신 처리.
 - **Robustness**: MSVC `/analyze` 및 `/W4` 린트 적용으로 코드 품질 확보.
 - **Architecture**: 클래스 기반 리팩토링 및 RAII 패턴 적용.
 

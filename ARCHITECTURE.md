@@ -61,10 +61,12 @@ sequenceDiagram
     loop Ping-Pong 통신 사이클
         A1->>Bus: Ping 전송 (sequence_num: N)
         Bus->>A2: 데이터 전달
+        Note right of A2: DataReaderListener::on_data_available() 트리거
         Note right of A2: Ping 수신 처리 및 로그 출력
         
         A2->>Bus: Pong 응답 (sequence_num: N)
         Bus->>A1: 데이터 전달
+        Note left of A1: DataReaderListener::on_data_available() 트리거
         Note left of A1: Pong 수신 확인 및 로그 출력
         
         A1->>A1: 1초 대기 후 다음 시퀀스 시작
