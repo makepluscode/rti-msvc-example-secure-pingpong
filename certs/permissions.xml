@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/7.5.0/rti_dds_security_permissions.xsd">
+    <permissions>
+        <grant name="App1_Permissions">
+            <subject_name>CN=App1,O=RTI,C=KR</subject_name>
+            <validity>
+                <not_before>2024-01-01T00:00:00</not_before>
+                <not_after>2034-01-01T00:00:00</not_after>
+            </validity>
+            <allow>
+                <domains>
+                    <id>0</id>
+                </domains>
+                <publish>
+                    <topics>
+                        <topic>Ping</topic>
+                    </topics>
+                </publish>
+                <subscribe>
+                    <topics>
+                        <topic>Pong</topic>
+                    </topics>
+                </subscribe>
+            </allow>
+            <default>DENY</default>
+        </grant>
+        <grant name="App2_Permissions">
+            <subject_name>CN=App2,O=RTI,C=KR</subject_name>
+            <validity>
+                <not_before>2024-01-01T00:00:00</not_before>
+                <not_after>2034-01-01T00:00:00</not_after>
+            </validity>
+            <allow>
+                <domains>
+                    <id>0</id>
+                </domains>
+                <publish>
+                    <topics>
+                        <topic>Pong</topic>
+                    </topics>
+                </publish>
+                <subscribe>
+                    <topics>
+                        <topic>Ping</topic>
+                    </topics>
+                </subscribe>
+            </allow>
+            <default>DENY</default>
+        </grant>
+    </permissions>
+</dds>

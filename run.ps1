@@ -6,6 +6,7 @@ chcp 65001 | Out-Null
 
 # 라이선스 파일 경로 설정
 $env:RTI_LICENSE_FILE = "C:\Program Files\rti_connext_dds-7.5.0\rti_license.dat"
+$env:Path = "C:\Program Files\rti_connext_dds-7.5.0\lib\x64Win64VS2017;" + $env:Path
 
 Write-Host "--- [실행] app1과 app2를 시작합니다 ---" -ForegroundColor Cyan
 Write-Host "--- (종료하려면 Ctrl+C를 누르세요) ---" -ForegroundColor Yellow
